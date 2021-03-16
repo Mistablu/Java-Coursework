@@ -13,14 +13,14 @@ public class Background implements ActionListener{
     private BlackSquirrel blackSquirrel;
     private GreySquirrel greySquirrel;
     private BrownSquirrel brownSquirrel;
-    private boolean nutStatus;
+    private boolean nutStatus = true;
     private String direction;
 
 
     private JButton upArrow = new JButton(new Picture("icons/BigArrow.png",0));
-    private JButton rightArrow = new JButton(new Picture("icons/Arrow.png",270));
+    private JButton rightArrow = new JButton(new Picture("icons/Arrow.png",90));
     private JButton downArrow = new JButton(new Picture("icons/BigArrow.png",180));
-    private JButton leftArrow = new JButton(new Picture("icons/Arrow.png",90));
+    private JButton leftArrow = new JButton(new Picture("icons/Arrow.png",270));
 
     public Background() {
         gridButton = new JButton[16];
@@ -44,8 +44,8 @@ public class Background implements ActionListener{
 
         panel.add("Center",grid);
         panel.add("South",downArrow);
-        panel.add("West",rightArrow);
-        panel.add("East",leftArrow);
+        panel.add("West",leftArrow);
+        panel.add("East",rightArrow);
         panel.add("North",upArrow);
 
         upArrow.addActionListener(this);
@@ -102,22 +102,22 @@ public class Background implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==upArrow) {
-            direction = "Up";
+            this.direction = "Up";
             moveSquirrel();
         }
 
         if (e.getSource()==downArrow) {
-            direction = "Down";
+            this.direction = "Down";
             moveSquirrel();
         }
 
         if (e.getSource()==rightArrow) {
-            direction = "Right";
+            this.direction = "Right";
             moveSquirrel();
         }
 
         if (e.getSource()==leftArrow) {
-            direction = "Left";
+            this.direction = "Left";
             moveSquirrel();
         }
     }

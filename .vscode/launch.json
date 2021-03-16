@@ -1,0 +1,50 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch CaseNoisettes",
+            "request": "launch",
+            "mainClass": "Coursework_Code.CaseNoisettes",
+            "projectName": "Java Coursework_fff2d211"
+        },
+        {
+            "type": "java",
+            "name": "Launch Driver",
+            "request": "launch",
+            "mainClass": "TestCode.Driver",
+            "projectName": "Java Coursework_fff2d211"
+        },
+        {
+            "type": "java",
+            "name": "Launch MathsTutor",
+            "request": "launch",
+            "mainClass": "TestCode.MathsTutor",
+            "projectName": "Java Coursework_fff2d211"
+        },
+        {
+            "type": "java",
+            "name": "Launch PingPong",
+            "request": "launch",
+            "mainClass": "TestCode.PingPong",
+            "projectName": "Java Coursework_fff2d211"
+        },
+        {
+            "type": "java",
+            "name": "Launch Play",
+            "request": "launch",
+            "mainClass": "TestCode.Play",
+            "projectName": "Java Coursework_fff2d211"
+        }
+    ]
+}
