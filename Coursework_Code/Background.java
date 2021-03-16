@@ -9,6 +9,13 @@ public class Background implements ActionListener{
     private JPanel panel;
     private JPanel grid;
     private JButton[] gridButton;
+    private RedSquirrel redSquirrel;
+    private BlackSquirrel blackSquirrel;
+    private GreySquirrel greySquirrel;
+    private BrownSquirrel brownSquirrel;
+    private boolean nutStatus;
+    private String direction;
+
 
     private JButton upArrow = new JButton(new Picture("icons/BigArrow.png",0));
     private JButton rightArrow = new JButton(new Picture("icons/Arrow.png",270));
@@ -51,8 +58,68 @@ public class Background implements ActionListener{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     }
+
+    public void setRedSquirrel(RedSquirrel squirrel) {
+        this.redSquirrel=squirrel;
+        this.blackSquirrel=null;
+        this.brownSquirrel=null;
+        this.greySquirrel=null;
+    }
+
+    public void setBlackSquirrel(BlackSquirrel squirrel) {
+        this.redSquirrel=null;
+        this.blackSquirrel=squirrel;
+        this.brownSquirrel=null;
+        this.greySquirrel=null;
+    }
+
+    public void setGreySquirrel(GreySquirrel squirrel) {
+        this.redSquirrel=null;
+        this.blackSquirrel=null;
+        this.brownSquirrel=null;
+        this.greySquirrel=squirrel;
+    }
+
+    public void setBrownSquirrel(BrownSquirrel squirrel) {
+        this.redSquirrel=null;
+        this.blackSquirrel=null;
+        this.brownSquirrel=squirrel;
+        this.greySquirrel=null;
+    }
+
+    private void moveSquirrel() {
+        if (redSquirrel != null)
+            redSquirrel.moveSquirrel(nutStatus, direction);
+        if (blackSquirrel != null)
+            blackSquirrel.moveSquirrel(nutStatus, direction);
+        if (greySquirrel != null)
+            greySquirrel.moveSquirrel(nutStatus, direction);
+        if (brownSquirrel != null)
+            brownSquirrel.moveSquirrel(nutStatus, direction);
+
+    }
+
+
     public void actionPerformed(ActionEvent e) {
-        
+        if (e.getSource()==upArrow) {
+            direction = "Up";
+            moveSquirrel();
+        }
+
+        if (e.getSource()==downArrow) {
+            direction = "Down";
+            moveSquirrel();
+        }
+
+        if (e.getSource()==rightArrow) {
+            direction = "Right";
+            moveSquirrel();
+        }
+
+        if (e.getSource()==leftArrow) {
+            direction = "Left";
+            moveSquirrel();
+        }
     }
 
     public JButton[] getgridButton() {
@@ -61,5 +128,9 @@ public class Background implements ActionListener{
 
     public JPanel getPanel() {
         return panel;
+    }
+
+    public Background getBackground() {
+        return this;
     }
 }

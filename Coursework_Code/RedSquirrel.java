@@ -3,18 +3,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class RedSquirrel {
+public class RedSquirrel implements ActionListener{
     private int headLocation;
     private int tailLocation;
     private int squirrelRotation;
     private JButton[] gridButton;
     private boolean nutStatus;
+    private Background background;
 
 
-    public RedSquirrel(int headLocation,int squirrelRotation, JButton[] gridButton) {
+    public RedSquirrel(int headLocation,int squirrelRotation, Background bg) {
         this.headLocation=headLocation;
         this.squirrelRotation=squirrelRotation;
-        this.gridButton = gridButton;
+        this.background = bg;
+        this.gridButton=background.getgridButton();
+        moveSquirrel(true,null);
+        gridButton[headLocation].addActionListener(this);
     }
 
     public int gettailLocation() {
@@ -46,12 +50,12 @@ public class RedSquirrel {
         }
 
         if (direction == "Left") {
-            headLocation+=-1;
+            headLocation+=1;
             move(nutStatus);
         }
 
         if (direction == "Right") {
-            headLocation+=1;
+            headLocation+=-1;
             move(nutStatus);
         }
     }
@@ -65,4 +69,38 @@ public class RedSquirrel {
          gridButton[gettailLocation()].setIcon(new Picture("icons/RedSquirrel2.png",squirrelRotation));
            
     }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==gridButton[headLocation])
+         {
+             background.setRedSquirrel(this);
+         }
+    }
+}
+
+class BlackSquirrel extends RedSquirrel {
+
+    public BlackSquirrel(int headLocation, int squirrelRotation, Background bg) {
+        super(headLocation, squirrelRotation, bg);
+        
+    }
+
+}
+
+class GreySquirrel extends RedSquirrel {
+
+    public GreySquirrel(int headLocation, int squirrelRotation, Background bg) {
+        super(headLocation, squirrelRotation, bg);
+        
+    }
+
+}
+
+class BrownSquirrel extends RedSquirrel {
+
+    public BrownSquirrel(int headLocation, int squirrelRotation, Background bg) {
+        super(headLocation, squirrelRotation, bg);
+        
+    }
+
 }
