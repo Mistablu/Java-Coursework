@@ -88,28 +88,41 @@ public class RedSquirrel implements ActionListener{
     }
     private boolean validateLeft() {
         if ((headLocation-1) >-1 && (headLocation-1) <16) {
+
             if (squirrelRotation == 270) {
-                if ((headLocation-1) == 15 || headLocation-1 == 11 || headLocation-1 == 7 || headLocation-1 == 3) {
+                if (headLocation-1 == 15 || headLocation-1 == 11 || headLocation-1 == 7 || headLocation-1 == 3) {
                     valid=false;
-                    System.out.println("Invalid Move");
                     return valid;
 
                 }
             }
+
             if (squirrelRotation == 90) {
-                if ((headLocation-1) == 12 || headLocation-1 == 8 || headLocation-1 == 4 || headLocation-1 == 0) {
+                if (headLocation-1 == 12 || headLocation-1 == 8 || headLocation-1 == 4 || headLocation-1 == 0) {
                     valid=false;  
-                    System.out.println("Invalid Move");
                     return valid;
                 }
-            }  
+            }
+
+            if (squirrelRotation == 0 || squirrelRotation == 180 ) {
+                if (headLocation-1 == 11 || headLocation-1 == 7 || headLocation-1 == 3) {
+                    valid=false;  
+                    return valid;
+                }
+            }
+
+        valid = true;
+        return valid; 
         }
+
         else    
             valid=false;
-        
-        valid = true;
-        System.out.println("Valid Move");
+            return valid;
+    }
+
+    private boolean validateRight() {
         return valid;
+        
     }
     private void move(boolean nutStatus) {
         if (nutStatus == true)
