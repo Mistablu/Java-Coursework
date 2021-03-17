@@ -54,16 +54,18 @@ public class RedSquirrel implements ActionListener{
             move(nutStatus);
 
         if (direction == "Up") {
-            setBlank();
-            if ((headLocation-4) >=0 && (headLocation-4) <=15) {
+            validateUp();
+            if (valid) {
+                setBlank();
                 headLocation-=4;
                 move(nutStatus);
             }
         }
 
         if (direction == "Down") {
-            setBlank();
-            if ((headLocation+4) >=0 && (headLocation+4) <=15) {
+            validateDown();
+            if (valid) {
+                setBlank();
                 headLocation+=4;
                 move(nutStatus);
             }
@@ -79,8 +81,9 @@ public class RedSquirrel implements ActionListener{
         }
 
         if (direction == "Right") {
-            setBlank();
-            if ((headLocation+1) >=0 && (headLocation+1) <=15) {
+            validateRight();
+            if (valid) {
+                setBlank();
                 headLocation+=1;
                 move(nutStatus);
             }
@@ -98,7 +101,7 @@ public class RedSquirrel implements ActionListener{
             }
 
             if (squirrelRotation == 90) {
-                if (headLocation-1 == 12 || headLocation-1 == 8 || headLocation-1 == 4 || headLocation-1 == 0) {
+                if (headLocation-1 == 12 || headLocation-1 == 8 || headLocation-1 == 4) {
                     valid=false;  
                     return valid;
                 }
@@ -121,9 +124,73 @@ public class RedSquirrel implements ActionListener{
     }
 
     private boolean validateRight() {
-        return valid;
-        
+        if ((headLocation+1) >-1 && (headLocation+1) <16) {
+
+            if (squirrelRotation == 270) {
+                if (headLocation+1 == 15 || headLocation+1 == 11 || headLocation+1 == 7 || headLocation+1 == 3) {
+                    valid=false;
+                    return valid;
+                }
+            }
+
+            if (squirrelRotation == 90) {
+                if (headLocation+1 == 12 || headLocation+1 == 8 || headLocation+1 == 4) {
+                    valid=false;
+                    return valid;
+                }
+            }
+
+            if (squirrelRotation == 0 || squirrelRotation == 180 ) {
+                if (headLocation+1 == 12 || headLocation+1 == 8 || headLocation+1 == 4) {
+                    valid=false;  
+                    return valid;
+                }
+            }
+
+        valid = true;
+        return valid; 
+        }
+
+        else    
+            valid=false;
+            return valid;
+
     }
+
+    private boolean validateUp() {
+        if ((headLocation-4) >-1 && (headLocation-4) <16) {
+            if (squirrelRotation == 180 ) {
+                if (headLocation-4 == 0 || headLocation-4 == 1 || headLocation-4 == 2 || headLocation-4 == 3) {
+                    valid=false;  
+                    return valid;
+                }    
+            }
+            valid = true;
+            return valid; 
+        }
+
+        else    
+            valid=false;
+            return valid;
+    }
+
+    private boolean validateDown() {
+        if ((headLocation+4) >-1 && (headLocation+4) <16) {
+            if (squirrelRotation == 0 ) {
+                if (headLocation+4 == 15 || headLocation+4 == 14 || headLocation+4 == 13 || headLocation+4 == 12) {
+                    valid=false;  
+                    return valid;
+                }    
+            }
+            valid = true;
+            return valid; 
+        }
+
+        else    
+            valid=false;
+            return valid;
+    }
+
     private void move(boolean nutStatus) {
         if (nutStatus == true)
             gridButton[headLocation].setIcon(new Picture("icons/RedSquirrel1Nut.png",squirrelRotation));
@@ -131,7 +198,6 @@ public class RedSquirrel implements ActionListener{
             gridButton[headLocation].setIcon(new Picture("icons/RedSquirrel1.png",squirrelRotation));
 
          gridButton[gettailLocation()].setIcon(new Picture("icons/RedSquirrel2.png",squirrelRotation));
-        System.out.println("Head is at: "+headLocation+" Tail is at: "+tailLocation);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -140,31 +206,4 @@ public class RedSquirrel implements ActionListener{
              background.setRedSquirrel(this);
          }
     }
-}
-
-class BlackSquirrel extends RedSquirrel {
-
-    public BlackSquirrel(int headLocation, int squirrelRotation, Background bg) {
-        super(headLocation, squirrelRotation, bg);
-        
-    }
-
-}
-
-class GreySquirrel extends RedSquirrel {
-
-    public GreySquirrel(int headLocation, int squirrelRotation, Background bg) {
-        super(headLocation, squirrelRotation, bg);
-        
-    }
-
-}
-
-class BrownSquirrel extends RedSquirrel {
-
-    public BrownSquirrel(int headLocation, int squirrelRotation, Background bg) {
-        super(headLocation, squirrelRotation, bg);
-        
-    }
-
 }
