@@ -15,6 +15,7 @@ public class Background implements ActionListener{
     private BrownSquirrel brownSquirrel;
     private boolean nutStatus = true;
     private String direction;
+    private int flowerLocation;
 
 
     private JButton upArrow = new JButton(new Picture("icons/BigArrow.png",0));
@@ -87,8 +88,17 @@ public class Background implements ActionListener{
         this.greySquirrel=null;
     }
 
+    public void createFlower(int location) {
+        gridButton[location].setIcon(new Picture("icons/Flower.png",0));
+        this.flowerLocation=location;
+    }
+
+    public int getflowerLocation() {
+        return flowerLocation;
+    }
     private void moveSquirrel() {
         if (redSquirrel != null)
+            redSquirrel.getnutStatus();
             redSquirrel.moveSquirrel(nutStatus, direction);
         if (blackSquirrel != null)
             blackSquirrel.moveSquirrel(nutStatus, direction);

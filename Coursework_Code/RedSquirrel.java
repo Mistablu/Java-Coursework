@@ -11,6 +11,7 @@ public class RedSquirrel implements ActionListener{
     private boolean nutStatus;
     private Background background;
     private boolean valid;
+    private int filledHole;
 
     public RedSquirrel(int headLocation,int squirrelRotation, Background bg) {
         this.headLocation=headLocation;
@@ -89,6 +90,9 @@ public class RedSquirrel implements ActionListener{
             }
         }
     }
+    private void removeNut() {
+            this.nutStatus=false;
+    }
     private boolean validateLeft() {
         if ((headLocation-1) >-1 && (headLocation-1) <16) {
 
@@ -105,6 +109,10 @@ public class RedSquirrel implements ActionListener{
                     valid=false;  
                     return valid;
                 }
+                if (headLocation-1 == background.getflowerLocation()+1) {
+                    valid=false;  
+                    return valid;  
+                }  
             }
 
             if (squirrelRotation == 0 || squirrelRotation == 180 ) {
@@ -114,6 +122,25 @@ public class RedSquirrel implements ActionListener{
                 }
             }
 
+            if (squirrelRotation == 180) {
+                if (headLocation-1 == background.getflowerLocation()+4) {
+                    valid=false;  
+                    return valid; 
+                }
+            }
+
+            if (squirrelRotation == 0) {
+                if (headLocation-1 == background.getflowerLocation()-4) {
+                    valid=false;  
+                    return valid; 
+                }
+            }  
+
+            if (headLocation-1 == background.getflowerLocation()) {
+                valid=false;  
+                return valid;  
+            }    
+        
         valid = true;
         return valid; 
         }
@@ -131,6 +158,10 @@ public class RedSquirrel implements ActionListener{
                     valid=false;
                     return valid;
                 }
+                if (headLocation+1 == background.getflowerLocation()-1) {
+                    valid=false;  
+                    return valid;  
+                }          
             }
 
             if (squirrelRotation == 90) {
@@ -147,6 +178,24 @@ public class RedSquirrel implements ActionListener{
                 }
             }
 
+            if (squirrelRotation == 180) {
+                if (headLocation+1 == background.getflowerLocation()+4) {
+                    valid=false;  
+                    return valid; 
+                }
+            }
+
+            if (squirrelRotation == 0) {
+                if (headLocation+1 == background.getflowerLocation()-4) {
+                    valid=false;  
+                    return valid; 
+                } 
+            }         
+
+            if (headLocation+1 == background.getflowerLocation()) {
+                valid=false;  
+                return valid;  
+            }   
         valid = true;
         return valid; 
         }
@@ -164,7 +213,29 @@ public class RedSquirrel implements ActionListener{
                     valid=false;  
                     return valid;
                 }    
+                if (headLocation-4 == background.getflowerLocation()+4) {
+                    valid=false;  
+                    return valid;
+                } 
             }
+
+            if (squirrelRotation == 270 ) {
+                if (headLocation-4 == background.getflowerLocation()-1) {
+                    valid=false;  
+                    return valid;  
+                }   
+            }
+            if (squirrelRotation == 90 ) {    
+                if (headLocation-4 == background.getflowerLocation()+1) {
+                    valid=false;  
+                    return valid;  
+                }           
+            }
+            if (headLocation-4 == background.getflowerLocation()) {
+                valid=false;  
+                return valid;  
+            } 
+              
             valid = true;
             return valid; 
         }
@@ -181,7 +252,31 @@ public class RedSquirrel implements ActionListener{
                     valid=false;  
                     return valid;
                 }    
+                if (headLocation+4 == background.getflowerLocation()-4) {
+                    valid=false;  
+                    return valid;  
+                }         
             }
+
+            if (squirrelRotation == 270 ) {
+                if (headLocation+4 == background.getflowerLocation()-1) {
+                    valid=false;  
+                    return valid;  
+                }                
+            } 
+
+            if (squirrelRotation == 90 ) {    
+                if (headLocation+4 == background.getflowerLocation()+1) {
+                    valid=false;  
+                    return valid;  
+                }    
+            }
+
+            if (headLocation+4 == background.getflowerLocation()) {
+                valid=false;  
+                return valid;  
+            } 
+
             valid = true;
             return valid; 
         }
@@ -200,6 +295,9 @@ public class RedSquirrel implements ActionListener{
          gridButton[gettailLocation()].setIcon(new Picture("icons/RedSquirrel2.png",squirrelRotation));
     }
 
+    public boolean getnutStatus() {
+        return this.nutStatus;
+    }
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==gridButton[headLocation])
          {
