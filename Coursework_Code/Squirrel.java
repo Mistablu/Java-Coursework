@@ -10,8 +10,11 @@ public class Squirrel {
     private Background background;
     private String squirrelHead,squirrelNutHead,squirrelTail,colour;
     private int[] allHeadLocations;
+    private Integer[] obstacles,colourExceptions;
+    private String direction;
 
     public Squirrel(int headLocation, int squirrelRotation, Background bg, String colour) {
+        colourExceptions = new Integer[12];
         allHeadLocations = new int[4];
         this.headLocation=headLocation;
         this.squirrelRotation=squirrelRotation;
@@ -53,7 +56,11 @@ public class Squirrel {
         return headLocation;
     }
 
-    public int gettailLocation() {
+    public int getSquirrelRotation() {
+        return squirrelRotation;
+    }
+
+    public int gettailLocation(int headLocation, int squirrelRotation) {
         if (squirrelRotation == 0)
                 tailLocation = headLocation+4;
 
@@ -78,13 +85,13 @@ public class Squirrel {
         else
             gridButton[headLocation].setIcon(new Picture("icons/Empty.png",0));
 
-        if (gettailLocation()==2 || gettailLocation()==4|| gettailLocation()==9 || gettailLocation()==15) {
-            gridButton[gettailLocation()].setIcon(new Picture("icons/Hole.png",0)); 
-            if (gettailLocation()==filledHole)
-                gridButton[gettailLocation()].setIcon(new Picture("icons/HoleNut.png",0));  
+        if (gettailLocation(headLocation,squirrelRotation)==2 || gettailLocation(headLocation,squirrelRotation)==4|| gettailLocation(headLocation,squirrelRotation)==9 || gettailLocation(headLocation,squirrelRotation)==15) {
+            gridButton[gettailLocation(headLocation,squirrelRotation)].setIcon(new Picture("icons/Hole.png",0)); 
+            if (gettailLocation(headLocation,squirrelRotation)==filledHole)
+                gridButton[gettailLocation(headLocation,squirrelRotation)].setIcon(new Picture("icons/HoleNut.png",0));  
         }  
         else
-            gridButton[gettailLocation()].setIcon(new Picture("icons/Empty.png",0));
+            gridButton[gettailLocation(headLocation,squirrelRotation)].setIcon(new Picture("icons/Empty.png",0));
         
 
 
@@ -93,6 +100,7 @@ public class Squirrel {
 
     public void moveSquirrel(boolean nutStatus,String direction) {
         this.nutStatus=nutStatus;
+        this.direction = direction;
         if (direction == null)
             move(nutStatus);
 
@@ -146,7 +154,32 @@ public class Squirrel {
 
         }
     }
+
+    private Integer[] colourExceptions() {
+        colourExceptions = obstacles;
+        if (colour=="Red") {
+            colourExceptions[1]=null;
+            colourExceptions[2]=null;
+        }
+        if (colour=="Black") {
+            colourExceptions[3]=null;
+            colourExceptions[4]=null;
+        }
+        if (colour=="Brown") {
+            colourExceptions[5]=null;
+            colourExceptions[6]=null;
+        }
+        if (colour=="Grey") {
+            colourExceptions[7]=null;
+            colourExceptions[8]=null;
+        }
+        return colourExceptions;
+
+    }
+
     private boolean validateLeft() {
+        this.obstacles = background.getObstacles();
+        this.obstacles = colourExceptions();
         if ((headLocation-1) >-1 && (headLocation-1) <16) {
 
             if (squirrelRotation == 270) {
@@ -175,6 +208,7 @@ public class Squirrel {
             }
 
             if (squirrelRotation == 180) {
+
                 if (headLocation-1 == background.getflowerLocation()+4) {
                     valid=false;  
                     return valid; 
@@ -192,6 +226,14 @@ public class Squirrel {
                 valid=false;  
                 return valid;  
             }    
+            for (int i=0; i<12;i++) 
+                if (obstacles[i] != null) 
+                    if (headLocation-1 == obstacles[i] || this.gettailLocation((headLocation-1),squirrelRotation)==obstacles[i]) {
+                        valid=false;
+                        return valid;
+                        }
+                
+            
 
         valid = true;
         return valid; 
@@ -203,6 +245,8 @@ public class Squirrel {
     }
 
     private boolean validateRight() {
+        this.obstacles = background.getObstacles();
+        this.obstacles = colourExceptions();
         if ((headLocation+1) >-1 && (headLocation+1) <16) {
 
             if (squirrelRotation == 270) {
@@ -247,7 +291,15 @@ public class Squirrel {
             if (headLocation+1 == background.getflowerLocation()) {
                 valid=false;  
                 return valid;  
-            }   
+            } 
+            for (int i=0; i<12;i++) {
+                if (obstacles[i] != null) {
+                    if (headLocation+1 == obstacles[i] || this.gettailLocation(headLocation+1,squirrelRotation)==obstacles[i]) {
+                        valid=false;
+                        return valid;
+                        }  
+                    }
+                }
         valid = true;
         return valid; 
         }
@@ -259,6 +311,8 @@ public class Squirrel {
     }
 
     private boolean validateUp() {
+        this.obstacles = background.getObstacles();
+        this.obstacles = colourExceptions();
         if ((headLocation-4) >-1 && (headLocation-4) <16) {
             if (squirrelRotation == 180 ) {
                 if (headLocation-4 == 0 || headLocation-4 == 1 || headLocation-4 == 2 || headLocation-4 == 3) {
@@ -287,9 +341,17 @@ public class Squirrel {
                 valid=false;  
                 return valid;  
             } 
-              
-            valid = true;
-            return valid; 
+            for (int i=0; i<12;i++) {
+                if (obstacles[i] != null) {
+                    if (headLocation-4 == obstacles[i] || this.gettailLocation(headLocation-4,squirrelRotation)==obstacles[i]) {
+                        valid=false;
+                        return valid;
+                    } 
+                }
+            }
+
+        valid = true;
+        return valid; 
         }
 
         else    
@@ -298,6 +360,8 @@ public class Squirrel {
     }
 
     private boolean validateDown() {
+        this.obstacles = background.getObstacles();
+        this.obstacles = colourExceptions();
         if ((headLocation+4) >-1 && (headLocation+4) <16) {
             if (squirrelRotation == 0 ) {
                 if (headLocation+4 == 15 || headLocation+4 == 14 || headLocation+4 == 13 || headLocation+4 == 12) {
@@ -329,8 +393,15 @@ public class Squirrel {
                 return valid;  
             } 
 
-            valid = true;
-            return valid; 
+            for (int i=0; i<12;i++)
+                if (obstacles[i] != null)
+                    if (headLocation+4 == obstacles[i] || this.gettailLocation(headLocation+4,squirrelRotation)==obstacles[i]) {
+                        valid=false;
+                        return valid;
+                    }
+
+        valid = true;
+        return valid; 
         }
 
         else    
@@ -344,7 +415,7 @@ public class Squirrel {
         else
             gridButton[headLocation].setIcon(new Picture(squirrelHead,squirrelRotation));
 
-         gridButton[gettailLocation()].setIcon(new Picture(squirrelTail,squirrelRotation));
+         gridButton[gettailLocation(headLocation,squirrelRotation)].setIcon(new Picture(squirrelTail,squirrelRotation));
 
         // background.giveHeadLocation(headLocation);
         
@@ -353,9 +424,4 @@ public class Squirrel {
     public boolean getnutStatus() {
         return this.nutStatus;
     }
-
-    //public void actionPerformed(ActionEvent e) {
-    //    if (e.getSource()==gridButton[this.headLocation])
-    //        background.setSquirrel(this);        
-    //}
 }

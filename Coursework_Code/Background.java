@@ -13,7 +13,7 @@ public class Background implements ActionListener{
     private String direction;
     private int flowerLocation=16; //Initialise flower to an unreachable location instead of 0
     private Squirrel redSquirrel,blackSquirrel,greySquirrel,brownSquirrel;
-
+    private Integer[] obstacles;
 
     private JButton upArrow = new JButton(new Picture("icons/BigArrow.png",0));
     private JButton rightArrow = new JButton(new Picture("icons/Arrow.png",90));
@@ -22,6 +22,7 @@ public class Background implements ActionListener{
 
     public Background() {
         gridButton = new JButton[16];
+        obstacles = new Integer[12];
         frame = new JFrame();
         frame.setTitle("Case Noisettes");
         frame.setSize(600,600);
@@ -91,6 +92,29 @@ public class Background implements ActionListener{
 
     }
 
+    public Integer[] getObstacles() {
+        obstacles[0]=flowerLocation;
+        if (redSquirrel != null) {
+            obstacles[1]=redSquirrel.getheadLocation();
+            obstacles[2]=redSquirrel.gettailLocation(redSquirrel.getheadLocation(), redSquirrel.getSquirrelRotation());
+        }
+        if (blackSquirrel != null) {
+            obstacles[3]=blackSquirrel.getheadLocation();
+            obstacles[4]=blackSquirrel.gettailLocation(blackSquirrel.getheadLocation(), blackSquirrel.getSquirrelRotation());
+        }
+        if (brownSquirrel != null) {
+            obstacles[5]=brownSquirrel.getheadLocation();
+            obstacles[6]=brownSquirrel.gettailLocation(brownSquirrel.getheadLocation(), brownSquirrel.getSquirrelRotation());
+        }
+        if (greySquirrel != null) {
+            obstacles[7]=greySquirrel.getheadLocation();
+            obstacles[8]=greySquirrel.gettailLocation(greySquirrel.getheadLocation(), greySquirrel.getSquirrelRotation());
+        }
+        return obstacles;
+    }
+
+
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==upArrow) {
             this.direction = "Up";
@@ -113,13 +137,15 @@ public class Background implements ActionListener{
         }
 
         if (redSquirrel != null) {
-            if (e.getSource()==gridButton[redSquirrel.getheadLocation()]) 
+            if (e.getSource()==gridButton[redSquirrel.getheadLocation()]) {
                 this.squirrel=redSquirrel;  
+            }
         }
 
         if (greySquirrel != null) {
-            if (e.getSource()==gridButton[greySquirrel.getheadLocation()]) 
+            if (e.getSource()==gridButton[greySquirrel.getheadLocation()])  {
                 this.squirrel=greySquirrel;
+            }
         }
 
         if (blackSquirrel != null) {

@@ -7,6 +7,5 @@ public class CaseNoisettes {
         Squirrel gq = new Squirrel(10,0,bg,"Grey");
         bg.addRedSquirrel(sq);
         bg.addGreySquirrel(gq);
-
     }
 }
