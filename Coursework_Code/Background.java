@@ -9,13 +9,10 @@ public class Background implements ActionListener{
     private JPanel panel;
     private JPanel grid;
     private JButton[] gridButton;
-    private RedSquirrel redSquirrel;
-    private BlackSquirrel blackSquirrel;
-    private GreySquirrel greySquirrel;
-    private BrownSquirrel brownSquirrel;
-    private boolean nutStatus = true;
+    private Squirrel squirrel;
     private String direction;
-    private int flowerLocation;
+    private int flowerLocation=16; //Initialise flower to an unreachable location instead of 0
+    private Squirrel redSquirrel,blackSquirrel,greySquirrel,brownSquirrel;
 
 
     private JButton upArrow = new JButton(new Picture("icons/BigArrow.png",0));
@@ -38,6 +35,7 @@ public class Background implements ActionListener{
                 gridButton[i] = new JButton(new Picture("icons/Empty.png", 0));
 
             grid.add(gridButton[i]);
+            gridButton[i].addActionListener(this);
         }
 
         panel = new JPanel();
@@ -57,35 +55,10 @@ public class Background implements ActionListener{
         frame.setContentPane(panel);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
     }
 
-    public void setRedSquirrel(RedSquirrel squirrel) {
-        this.redSquirrel=squirrel;
-        this.blackSquirrel=null;
-        this.brownSquirrel=null;
-        this.greySquirrel=null;
-    }
-
-    public void setBlackSquirrel(BlackSquirrel squirrel) {
-        this.redSquirrel=null;
-        this.blackSquirrel=squirrel;
-        this.brownSquirrel=null;
-        this.greySquirrel=null;
-    }
-
-    public void setGreySquirrel(GreySquirrel squirrel) {
-        this.redSquirrel=null;
-        this.blackSquirrel=null;
-        this.brownSquirrel=null;
-        this.greySquirrel=squirrel;
-    }
-
-    public void setBrownSquirrel(BrownSquirrel squirrel) {
-        this.redSquirrel=null;
-        this.blackSquirrel=null;
-        this.brownSquirrel=squirrel;
-        this.greySquirrel=null;
+    public void setSquirrel(Squirrel squirrel) {
+        this.squirrel=squirrel;
     }
 
     public void createFlower(int location) {
@@ -93,22 +66,30 @@ public class Background implements ActionListener{
         this.flowerLocation=location;
     }
 
+    public void addRedSquirrel(Squirrel newSquirrel) {
+        this.redSquirrel=newSquirrel;
+    }
+
+    public void addBlackSquirrel(Squirrel newSquirrel) {
+        this.blackSquirrel=newSquirrel;
+    }
+
+    public void addBrownSquirrel(Squirrel newSquirrel) {
+        this.brownSquirrel=newSquirrel;
+    }
+
+    public void addGreySquirrel(Squirrel newSquirrel) {
+        this.greySquirrel=newSquirrel;
+    }
+
     public int getflowerLocation() {
         return flowerLocation;
     }
+
     private void moveSquirrel() {
-        if (redSquirrel != null)
-            redSquirrel.getnutStatus();
-            redSquirrel.moveSquirrel(nutStatus, direction);
-        if (blackSquirrel != null)
-            blackSquirrel.moveSquirrel(nutStatus, direction);
-        if (greySquirrel != null)
-            greySquirrel.moveSquirrel(nutStatus, direction);
-        if (brownSquirrel != null)
-            brownSquirrel.moveSquirrel(nutStatus, direction);
+            squirrel.moveSquirrel(squirrel.getnutStatus(), direction);
 
     }
-
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==upArrow) {
@@ -130,6 +111,27 @@ public class Background implements ActionListener{
             this.direction = "Left";
             moveSquirrel();
         }
+        if (e.getSource()==gridButton[redSquirrel.getheadLocation()]) {
+            System.out.println(redSquirrel.getheadLocation());
+            this.squirrel=redSquirrel;
+        }
+
+        if (e.getSource()==gridButton[greySquirrel.getheadLocation()]) {
+            System.out.println(greySquirrel.getheadLocation());
+            this.squirrel=greySquirrel;
+        }
+
+        if (e.getSource()==gridButton[blackSquirrel.getheadLocation()]) {
+            System.out.println(blackSquirrel.getheadLocation());
+            this.squirrel=blackSquirrel;
+        }
+
+        if (e.getSource()==gridButton[brownSquirrel.getheadLocation()]) {
+            System.out.println(brownSquirrel.getheadLocation());
+            this.squirrel=brownSquirrel;
+        }
+        
+
     }
 
     public JButton[] getgridButton() {
