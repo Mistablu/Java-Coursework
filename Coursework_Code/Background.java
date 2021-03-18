@@ -111,24 +111,25 @@ public class Background implements ActionListener{
             this.direction = "Left";
             moveSquirrel();
         }
-        if (e.getSource()==gridButton[redSquirrel.getheadLocation()]) {
-            System.out.println(redSquirrel.getheadLocation());
-            this.squirrel=redSquirrel;
+
+        if (redSquirrel != null) {
+            if (e.getSource()==gridButton[redSquirrel.getheadLocation()]) 
+                this.squirrel=redSquirrel;  
         }
 
-        if (e.getSource()==gridButton[greySquirrel.getheadLocation()]) {
-            System.out.println(greySquirrel.getheadLocation());
-            this.squirrel=greySquirrel;
+        if (greySquirrel != null) {
+            if (e.getSource()==gridButton[greySquirrel.getheadLocation()]) 
+                this.squirrel=greySquirrel;
         }
 
-        if (e.getSource()==gridButton[blackSquirrel.getheadLocation()]) {
-            System.out.println(blackSquirrel.getheadLocation());
-            this.squirrel=blackSquirrel;
+        if (blackSquirrel != null) {
+            if (e.getSource()==gridButton[blackSquirrel.getheadLocation()]) 
+                this.squirrel=blackSquirrel;
         }
 
-        if (e.getSource()==gridButton[brownSquirrel.getheadLocation()]) {
-            System.out.println(brownSquirrel.getheadLocation());
-            this.squirrel=brownSquirrel;
+        if (brownSquirrel != null) {
+            if (e.getSource()==gridButton[brownSquirrel.getheadLocation()]) 
+                this.squirrel=brownSquirrel;
         }
         
 
