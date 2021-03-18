@@ -1,7 +1,7 @@
 package Coursework_Code;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+//import java.awt.*;
+//import java.awt.event.*;
 
 public class Squirrel {
     private int headLocation,tailLocation,squirrelRotation,filledHole;
@@ -9,13 +9,13 @@ public class Squirrel {
     private boolean nutStatus=true,valid;
     private Background background;
     private String squirrelHead,squirrelNutHead,squirrelTail,colour;
-    private int[] allHeadLocations;
+//    private int[] allHeadLocations;
     private Integer[] obstacles,colourExceptions;
-    private String direction;
 
     public Squirrel(int headLocation, int squirrelRotation, Background bg, String colour) {
+        this.nutStatus=true;
         colourExceptions = new Integer[12];
-        allHeadLocations = new int[4];
+//        allHeadLocations = new int[4];
         this.headLocation=headLocation;
         this.squirrelRotation=squirrelRotation;
         this.background = bg;
@@ -100,7 +100,6 @@ public class Squirrel {
 
     public void moveSquirrel(boolean nutStatus,String direction) {
         this.nutStatus=nutStatus;
-        this.direction = direction;
         if (direction == null)
             move(nutStatus);
 
@@ -194,10 +193,6 @@ public class Squirrel {
                     valid=false;  
                     return valid;
                 }
-                if (headLocation-1 == background.getflowerLocation()+1) {
-                    valid=false;  
-                    return valid;  
-                }  
             }
 
             if (squirrelRotation == 0 || squirrelRotation == 180 ) {
@@ -206,26 +201,7 @@ public class Squirrel {
                     return valid;
                 }
             }
-
-            if (squirrelRotation == 180) {
-
-                if (headLocation-1 == background.getflowerLocation()+4) {
-                    valid=false;  
-                    return valid; 
-                }
-            }
-
-            if (squirrelRotation == 0) {
-                if (headLocation-1 == background.getflowerLocation()-4) {
-                    valid=false;  
-                    return valid; 
-                }
-            }  
-
-            if (headLocation-1 == background.getflowerLocation()) {
-                valid=false;  
-                return valid;  
-            }    
+ 
             for (int i=0; i<12;i++) 
                 if (obstacles[i] != null) 
                     if (headLocation-1 == obstacles[i] || this.gettailLocation((headLocation-1),squirrelRotation)==obstacles[i]) {
@@ -233,8 +209,6 @@ public class Squirrel {
                         return valid;
                         }
                 
-            
-
         valid = true;
         return valid; 
         }
@@ -254,10 +228,6 @@ public class Squirrel {
                     valid=false;
                     return valid;
                 }
-                if (headLocation+1 == background.getflowerLocation()-1) {
-                    valid=false;  
-                    return valid;  
-                }          
             }
 
             if (squirrelRotation == 90) {
@@ -274,24 +244,6 @@ public class Squirrel {
                 }
             }
 
-            if (squirrelRotation == 180) {
-                if (headLocation+1 == background.getflowerLocation()+4) {
-                    valid=false;  
-                    return valid; 
-                }
-            }
-
-            if (squirrelRotation == 0) {
-                if (headLocation+1 == background.getflowerLocation()-4) {
-                    valid=false;  
-                    return valid; 
-                } 
-            }         
-
-            if (headLocation+1 == background.getflowerLocation()) {
-                valid=false;  
-                return valid;  
-            } 
             for (int i=0; i<12;i++) {
                 if (obstacles[i] != null) {
                     if (headLocation+1 == obstacles[i] || this.gettailLocation(headLocation+1,squirrelRotation)==obstacles[i]) {
@@ -300,6 +252,7 @@ public class Squirrel {
                         }  
                     }
                 }
+
         valid = true;
         return valid; 
         }
@@ -318,29 +271,9 @@ public class Squirrel {
                 if (headLocation-4 == 0 || headLocation-4 == 1 || headLocation-4 == 2 || headLocation-4 == 3) {
                     valid=false;  
                     return valid;
-                }    
-                if (headLocation-4 == background.getflowerLocation()+4) {
-                    valid=false;  
-                    return valid;
-                } 
-            }
-
-            if (squirrelRotation == 270 ) {
-                if (headLocation-4 == background.getflowerLocation()-1) {
-                    valid=false;  
-                    return valid;  
                 }   
-            }
-            if (squirrelRotation == 90 ) {    
-                if (headLocation-4 == background.getflowerLocation()+1) {
-                    valid=false;  
-                    return valid;  
-                }           
-            }
-            if (headLocation-4 == background.getflowerLocation()) {
-                valid=false;  
-                return valid;  
             } 
+
             for (int i=0; i<12;i++) {
                 if (obstacles[i] != null) {
                     if (headLocation-4 == obstacles[i] || this.gettailLocation(headLocation-4,squirrelRotation)==obstacles[i]) {
@@ -367,31 +300,8 @@ public class Squirrel {
                 if (headLocation+4 == 15 || headLocation+4 == 14 || headLocation+4 == 13 || headLocation+4 == 12) {
                     valid=false;  
                     return valid;
-                }    
-                if (headLocation+4 == background.getflowerLocation()-4) {
-                    valid=false;  
-                    return valid;  
-                }         
-            }
-
-            if (squirrelRotation == 270 ) {
-                if (headLocation+4 == background.getflowerLocation()-1) {
-                    valid=false;  
-                    return valid;  
-                }                
-            } 
-
-            if (squirrelRotation == 90 ) {    
-                if (headLocation+4 == background.getflowerLocation()+1) {
-                    valid=false;  
-                    return valid;  
-                }    
-            }
-
-            if (headLocation+4 == background.getflowerLocation()) {
-                valid=false;  
-                return valid;  
-            } 
+                } 
+            }   
 
             for (int i=0; i<12;i++)
                 if (obstacles[i] != null)
@@ -410,15 +320,17 @@ public class Squirrel {
     }
 
     private void move(boolean nutStatus) {
+
         if (nutStatus == true)
             gridButton[headLocation].setIcon(new Picture(squirrelNutHead,squirrelRotation));
         else
             gridButton[headLocation].setIcon(new Picture(squirrelHead,squirrelRotation));
 
          gridButton[gettailLocation(headLocation,squirrelRotation)].setIcon(new Picture(squirrelTail,squirrelRotation));
-
-        // background.giveHeadLocation(headLocation);
-        
+         
+    //     boolean cleared = background.checkCleared();
+    //     if (cleared == true)
+    //         background.levelCleared();      
     }
 
     public boolean getnutStatus() {

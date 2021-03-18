@@ -1,5 +1,6 @@
 package Coursework_Code;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -16,7 +17,7 @@ public class LevelSelect implements ActionListener {
 
     public LevelSelect() {
         frame = new JFrame();
-        frame.setTitle("Ericsson T39");
+        frame.setTitle("Case Noisettes");
         frame.setSize(300,150);
 
         lvl1Button.addActionListener(this);
@@ -43,14 +44,14 @@ public class LevelSelect implements ActionListener {
     }
 
     private void buildLevel1() {
-            frame.setVisible(false);
             Background bg = new Background();
             bg.createFlower(9);
             Squirrel sq = new Squirrel(5,270,bg,"Red");
             Squirrel gq = new Squirrel(10,0,bg,"Grey");
             bg.addRedSquirrel(sq);
             bg.addGreySquirrel(gq); 
-        
+            frame.setVisible(false);
+            frame.dispose();
     }
 
     private void buildLevel2() {
@@ -60,6 +61,10 @@ public class LevelSelect implements ActionListener {
     private void buildLevel3() {
 
     }
+
+    public JFrame getFrame() {
+        return frame;
+    }    
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==lvl1Button)

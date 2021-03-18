@@ -14,6 +14,7 @@ public class Background implements ActionListener{
     private int flowerLocation=16; //Initialise flower to an unreachable location instead of 0
     private Squirrel redSquirrel,blackSquirrel,greySquirrel,brownSquirrel;
     private Integer[] obstacles;
+    private Squirrel[] activeSquirrels;
 
     private JButton upArrow = new JButton(new Picture("icons/BigArrow.png",0));
     private JButton rightArrow = new JButton(new Picture("icons/Arrow.png",90));
@@ -21,6 +22,7 @@ public class Background implements ActionListener{
     private JButton leftArrow = new JButton(new Picture("icons/Arrow.png",270));
 
     public Background() {
+        activeSquirrels = new Squirrel[4];
         gridButton = new JButton[16];
         obstacles = new Integer[12];
         frame = new JFrame();
@@ -69,18 +71,22 @@ public class Background implements ActionListener{
 
     public void addRedSquirrel(Squirrel newSquirrel) {
         this.redSquirrel=newSquirrel;
+        this.activeSquirrels[0]=redSquirrel;
     }
 
     public void addBlackSquirrel(Squirrel newSquirrel) {
         this.blackSquirrel=newSquirrel;
+        this.activeSquirrels[1]=blackSquirrel;
     }
 
     public void addBrownSquirrel(Squirrel newSquirrel) {
         this.brownSquirrel=newSquirrel;
+        this.activeSquirrels[2]=brownSquirrel;
     }
 
     public void addGreySquirrel(Squirrel newSquirrel) {
         this.greySquirrel=newSquirrel;
+        this.activeSquirrels[3]=greySquirrel;
     }
 
     public int getflowerLocation() {
@@ -89,6 +95,33 @@ public class Background implements ActionListener{
 
     private void moveSquirrel() {
             squirrel.moveSquirrel(squirrel.getnutStatus(), direction);
+            boolean cleared = this.checkCleared();
+            if (cleared == true)
+                this.levelCleared();
+
+    }
+
+    public boolean checkCleared() {
+        boolean clearedLevel = true;
+        for (int i=0; i<4;i++)
+            if (activeSquirrels[i] != null)
+                if (activeSquirrels[i].getnutStatus()==true) {
+                    clearedLevel = false;
+                    return clearedLevel;
+                }   
+        return clearedLevel;
+    }
+
+    public void clearedBox() {
+        JFrame clearedFrame = new JFrame();
+        JOptionPane.showMessageDialog(clearedFrame,"Congratulations!\nlevel cleared!");
+    }
+
+    public void levelCleared() {
+        LevelSelect lvsq = new LevelSelect();
+        frame.setVisible(false);
+        frame.dispose();
+        clearedBox();
 
     }
 
@@ -112,8 +145,6 @@ public class Background implements ActionListener{
         }
         return obstacles;
     }
-
-
 
     public void actionPerformed(ActionEvent e) {
         if (this.squirrel != null) {
