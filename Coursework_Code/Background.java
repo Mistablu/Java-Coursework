@@ -116,24 +116,26 @@ public class Background implements ActionListener{
 
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==upArrow) {
-            this.direction = "Up";
-            moveSquirrel();
-        }
+        if (this.squirrel != null) {
+            if (e.getSource()==upArrow) {
+                this.direction = "Up";
+                moveSquirrel();
+            }
 
-        if (e.getSource()==downArrow) {
-            this.direction = "Down";
-            moveSquirrel();
-        }
+            if (e.getSource()==downArrow) {
+                this.direction = "Down";
+                moveSquirrel();
+            }
 
-        if (e.getSource()==rightArrow) {
-            this.direction = "Right";
-            moveSquirrel();
-        }
+            if (e.getSource()==rightArrow) {
+                this.direction = "Right";
+                moveSquirrel();
+            }
 
-        if (e.getSource()==leftArrow) {
-            this.direction = "Left";
-            moveSquirrel();
+            if (e.getSource()==leftArrow) {
+                this.direction = "Left";
+                moveSquirrel();
+            }
         }
 
         if (redSquirrel != null) {
