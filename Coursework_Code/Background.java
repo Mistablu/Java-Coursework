@@ -13,7 +13,7 @@ public class Background implements ActionListener{
     private String direction;
     private int flowerLocation=16; //Initialise flower to an unreachable location instead of 0
     private Squirrel redSquirrel,blackSquirrel,greySquirrel,brownSquirrel;
-    private Integer[] obstacles;
+    private Integer[] obstacles,filledHoles;
     private Squirrel[] activeSquirrels;
 
     private JButton upArrow = new JButton(new Picture("icons/BigArrow.png",0));
@@ -25,6 +25,7 @@ public class Background implements ActionListener{
         activeSquirrels = new Squirrel[4];
         gridButton = new JButton[16];
         obstacles = new Integer[11];
+        filledHoles = new Integer[4];
         frame = new JFrame();
         frame.setTitle("Case Noisettes");
         frame.setSize(600,600);
@@ -112,17 +113,55 @@ public class Background implements ActionListener{
         return clearedLevel;
     }
 
-    public void clearedBox() {
+    private void clearedBox() {
         JFrame clearedFrame = new JFrame();
         JOptionPane.showMessageDialog(clearedFrame,"Congratulations!\nlevel cleared!");
     }
 
-    public void levelCleared() {
+    private void levelCleared() {
         LevelSelect lvsq = new LevelSelect();
         frame.setVisible(false);
         frame.dispose();
         clearedBox();
 
+    }
+
+    public void setFilledHoles(Integer filledHole) {
+        boolean unique = true;
+        if (squirrel.getColour()=="Red")
+            for (int i=0;i<4;i++)
+                if (filledHoles[i] != null)
+                    if (filledHoles[i]==filledHole)
+                        unique = false;
+            if (unique) 
+                filledHoles[0]=filledHole;
+
+        if (squirrel.getColour()=="Grey")
+            for (int i=0;i<4;i++)
+                if (filledHoles[i] != null)
+                    if (filledHoles[i]==filledHole)
+                        unique = false;
+            if (unique) 
+                filledHoles[1]=filledHole;
+
+        if (squirrel.getColour()=="Black")
+            for (int i=0;i<4;i++)
+                if (filledHoles[i] != null)
+                    if (filledHoles[i]==filledHole)
+                        unique = false;
+            if (unique) 
+                filledHoles[2]=filledHole;
+        if (squirrel.getColour()=="Brown")
+            for (int i=0;i<4;i++)
+                if (filledHoles[i] != null)
+                    if (filledHoles[i]==filledHole)
+                        unique = false;
+            if (unique) 
+                filledHoles[3]=filledHole;
+    }
+
+    public Integer[] getFilledHoles() {
+        return filledHoles;
     }
 
     public Integer[] getObstacles() {

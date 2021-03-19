@@ -13,7 +13,7 @@ public class LevelSelect implements ActionListener {
     private JButton lvl1Button = new JButton("Level 1");
     private JButton lvl2Button = new JButton("Level 2");
     private JButton lvl3Button = new JButton("Level 3");
-    private JTextField welcomeDisplay = new JTextField("Welcome to Case Noisettes!");
+    private JLabel welcomeDisplay = new JLabel("Please select a level.");
 
     public LevelSelect() {
         frame = new JFrame();

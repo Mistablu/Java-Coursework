@@ -19,7 +19,7 @@ public class Picture extends ImageIcon
      * filename and requested rotation.
      * 
      * @param filename The filename of an image to load.
-     * @param rotation The rotation to spply to the image on loading, measure in degrees.
+     * @param rotation The rotation to apply to the image on loading, measure in degrees.
      */
     public Picture(String filename, int rotation)
     {
