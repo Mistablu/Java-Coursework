@@ -27,7 +27,8 @@ public class Squirrel {
      */   
     public Squirrel(int headLocation, int squirrelRotation, Background background, String colour) {
 
-        colourExceptions = new Integer[12];
+        colourExceptions = new Integer[11];
+        obstacles = new Integer[11];
         //store constructor variables as private instance variables
         this.headLocation=headLocation;
         this.squirrelRotation=squirrelRotation;
@@ -147,7 +148,8 @@ public class Squirrel {
                 //changes icon of current tile before moving the squirrel
                 setBlank();
                 headLocation-=4;
-                checkNutStatus();
+                if (nutStatus)
+                    this.nutStatus=checkNutStatus();
                 move();
             }
         }
@@ -160,7 +162,8 @@ public class Squirrel {
                 //changes icon of current tile before moving the squirrel
                 setBlank();
                 headLocation+=4;
-                checkNutStatus();
+                if (nutStatus)
+                    this.nutStatus=checkNutStatus();
                 move();
             }
         }
@@ -173,7 +176,8 @@ public class Squirrel {
                 //changes icon of current tile before moving the squirrel
                 setBlank();
                 headLocation-=1;
-                checkNutStatus();
+                if (nutStatus)
+                    this.nutStatus=checkNutStatus();
                 move();
             }
         }
@@ -186,7 +190,8 @@ public class Squirrel {
                 //changes icon of current tile before moving the squirrel
                 setBlank();
                 headLocation+=1;
-                checkNutStatus();
+                if (nutStatus)
+                    this.nutStatus=checkNutStatus();
                 move();
             }
         }
@@ -199,7 +204,7 @@ public class Squirrel {
      * of the squirrel when it was constructed.
      */
     private Integer[] colourExceptions() {
-        colourExceptions = obstacles;
+        colourExceptions = background.getObstacles();
         if (colour=="Red") {
             //ignore indexes 1 & 2
             colourExceptions[1]=null;
@@ -231,30 +236,45 @@ public class Squirrel {
      * Modifies the nutStatus of the squirrel whenever it goes over a hole. The function first removes the nut from the squirrel before
      * re-adding it, only if it discovers that a nut was already dropped into the same hole prevoisly. 
      */
-    private void checkNutStatus() {
+    private boolean checkNutStatus() {
+        boolean nutStatus=true;
+        //grabs list of obstacles from Background object
+        obstacles = background.getObstacles();
+        //updates the list to exclude the current location of this squirrel as an obstacle
+        obstacles = colourExceptions();
         //gets list of filled holes from Background class
         filledHoles = background.getFilledHoles();
         //if the head lands on a hole
-        if (headLocation==2 || headLocation==4 || headLocation==9 || headLocation==15) {
-            //drop the nut
-            nutStatus=false;
-        
-        for (int i=0;i<4;i++) {
-            if (filledHoles[i] != null)
-                //if the hole was already full
-                if (headLocation+operator==filledHoles[i])
-                    //pick the nut back up
-                    nutStatus = true;
-        //stops you from dropping nuts into holes blocked by any obstacle
-        for (int j=0; j<11;j++) 
-            if (obstacles[j] != null)
-                if (headLocation == obstacles[j] || gettailLocation(headLocation, squirrelRotation)==obstacles[j] || getLFlowerLocation(headLocation)==obstacles[j])
-                    nutStatus=true;
+        if (headLocation==2 || headLocation==4 || headLocation==9 || headLocation==15) { 
+            //drop the nut 
+            for (int i=0;i<4;i++) {
+                if (filledHoles[i] != null) {
+                    //if the hole was already full
+                    if (headLocation==filledHoles[i]) {
+                        //pick the nut back up
+                        nutStatus = true;
+                        return nutStatus;
+                    }
+                }
+            }
+            //stops you from dropping nuts into holes blocked by any obstacle
+            for (int j=0; j<11;j++) {
+                if (obstacles[j] != null) 
+                    if (headLocation == obstacles[j] || gettailLocation(headLocation, squirrelRotation)==obstacles[j] || getLFlowerLocation(headLocation)==obstacles[j]) {
+                        nutStatus=true; 
+                        return nutStatus;
+                    }
+            }
+        nutStatus=false;
+                 
         }
         //if the hole has been filled then add its location to the array of filled holes stored in the Background object
-        if (nutStatus==false)
-            background.setFilledHoles(headLocation+operator);
+        if (nutStatus==false) {
+            background.setFilledHoles(headLocation);
+            System.out.println("apprantly the hole at "+headLocation+" is filled lol");
+
         }
+        return nutStatus;
     }
 
     /**

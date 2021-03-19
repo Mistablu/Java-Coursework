@@ -14,7 +14,7 @@ public class Background implements ActionListener{
     private JButton[] gridButton; //An array of buttons to be placed onto the grid, representing playing space on the board.
     private Squirrel squirrel; //Holds the object of the currently selected squirrel class.
     private String direction; //The direction in which the squirrel is to be moved.
-    private int flowerLocation=16; //Location of the hole-blocking flower. It is initialised to a number outside of bounds
+    private int flowerLocation=20; //Location of the hole-blocking flower. It is initialised to a number outside of bounds
                                    //so that it does not block a square when a flower is not created.
     private Squirrel redSquirrel,blackSquirrel,greySquirrel,brownSquirrel; //stores the object which represents each coloured squirrel on the board.
     private Integer[] obstacles; //Holds the indexes of all the currently inaccessible locations on the game board.
