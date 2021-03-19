@@ -1,4 +1,3 @@
-package Coursework_Code;
 import javax.swing.*;
 /**
  * This class represents a Squirrel object that users may interact with in the game.
@@ -23,7 +22,7 @@ public class Squirrel {
      * Constructor. Creates a new instance of the squirrel class based off the gives attributes.
      * @param headLocation Defines the initial location of the squirrels' head.
      * @param squirrelRotation Defines the permanent orientation of the squirrel in degrees.
-     * @param bg the parameter which defines the Background instance which the squirrel has been placed on.
+     * @param background the parameter which defines the Background instance which the squirrel has been placed on.
      * @param colour the permanent colour of the Squirrel.
      */   
     public Squirrel(int headLocation, int squirrelRotation, Background background, String colour) {
@@ -242,11 +241,14 @@ public class Squirrel {
                 if (headLocation+operator==filledHoles[i])
                     //pick the nut back up
                     nutStatus = true;
-        //stops you from dropping nuts onto hole-blocker flowers
-        if (headLocation+operator==background.getObstacles()[0])
-            nutStatus=true;
+        //stops you from dropping nuts into holes blocked by any obstacle
+        for (int j=0; j<11;j++) 
+            if (obstacles[j] != null)
+                if (headLocation+operator == obstacles[j] || gettailLocation(headLocation+operator, squirrelRotation)==obstacles[j] || getLFlowerLocation(headLocation+operator)==obstacles[j])
+                    nutStatus=true;
         }
-            //if the hole has been filled then add its location to the array of filled holes stored in the Background object
+        //if the hole has been filled then add its location to the array of filled holes stored in the Background object
+        if (nutStatus==false)
             background.setFilledHoles(headLocation+operator);
         }
     }
@@ -257,14 +259,14 @@ public class Squirrel {
      * @param operator  the amount that must be added to the index of the gridbutton to move the squirrel in the specified direction
      */
     private boolean validateDirection(int operator) {
-        //if the squirrel is holding a nut
-        if (nutStatus)
-            //check to see if it should drop it or not
-            checkNutStatus();
         //grabs list of obstacles from Background object
         obstacles = background.getObstacles();
         //updates the list to exclude the current location of this squirrel as an obstacle
         obstacles = colourExceptions();
+        //if the squirrel is holding a nut
+        if (nutStatus)
+            //check to see if it should drop it or not
+            checkNutStatus();
         //if the new headlocation is within the bounds of the grid
         if ((headLocation+operator) >-1 && (headLocation+operator) <16) {
             //for black and brown squirrels only
@@ -357,6 +359,9 @@ public class Squirrel {
                         valid=false;
                         return valid;
                         }
+            if (nutStatus)
+                //check to see if it should drop it or not
+                checkNutStatus();
         valid = true;
         return valid; 
         }

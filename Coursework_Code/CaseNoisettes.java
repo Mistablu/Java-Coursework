@@ -1,4 +1,3 @@
-package Coursework_Code;
 /**
  * The main function runs the main menu from which users may then select
  * a level to challenge.

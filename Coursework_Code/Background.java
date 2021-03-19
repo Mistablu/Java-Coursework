@@ -1,4 +1,3 @@
-package Coursework_Code;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
