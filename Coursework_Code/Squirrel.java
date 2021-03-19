@@ -147,6 +147,7 @@ public class Squirrel {
                 //changes icon of current tile before moving the squirrel
                 setBlank();
                 headLocation-=4;
+                checkNutStatus();
                 move();
             }
         }
@@ -159,6 +160,7 @@ public class Squirrel {
                 //changes icon of current tile before moving the squirrel
                 setBlank();
                 headLocation+=4;
+                checkNutStatus();
                 move();
             }
         }
@@ -171,6 +173,7 @@ public class Squirrel {
                 //changes icon of current tile before moving the squirrel
                 setBlank();
                 headLocation-=1;
+                checkNutStatus();
                 move();
             }
         }
@@ -183,6 +186,7 @@ public class Squirrel {
                 //changes icon of current tile before moving the squirrel
                 setBlank();
                 headLocation+=1;
+                checkNutStatus();
                 move();
             }
         }
@@ -231,7 +235,7 @@ public class Squirrel {
         //gets list of filled holes from Background class
         filledHoles = background.getFilledHoles();
         //if the head lands on a hole
-        if (headLocation+operator==2 || headLocation+operator==4 || headLocation+operator==9 || headLocation+operator==15) {
+        if (headLocation==2 || headLocation==4 || headLocation==9 || headLocation==15) {
             //drop the nut
             nutStatus=false;
         
@@ -244,7 +248,7 @@ public class Squirrel {
         //stops you from dropping nuts into holes blocked by any obstacle
         for (int j=0; j<11;j++) 
             if (obstacles[j] != null)
-                if (headLocation+operator == obstacles[j] || gettailLocation(headLocation+operator, squirrelRotation)==obstacles[j] || getLFlowerLocation(headLocation+operator)==obstacles[j])
+                if (headLocation == obstacles[j] || gettailLocation(headLocation, squirrelRotation)==obstacles[j] || getLFlowerLocation(headLocation)==obstacles[j])
                     nutStatus=true;
         }
         //if the hole has been filled then add its location to the array of filled holes stored in the Background object
@@ -359,9 +363,6 @@ public class Squirrel {
                         valid=false;
                         return valid;
                         }
-            if (nutStatus)
-                //check to see if it should drop it or not
-                checkNutStatus();
         valid = true;
         return valid; 
         }
