@@ -269,11 +269,9 @@ public class Squirrel {
                  
         }
         //if the hole has been filled then add its location to the array of filled holes stored in the Background object
-        if (nutStatus==false) {
+        if (nutStatus==false) 
             background.setFilledHoles(headLocation);
-            System.out.println("apprantly the hole at "+headLocation+" is filled lol");
-
-        }
+        
         return nutStatus;
     }
 
