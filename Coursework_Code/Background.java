@@ -24,7 +24,7 @@ public class Background implements ActionListener{
     public Background() {
         activeSquirrels = new Squirrel[4];
         gridButton = new JButton[16];
-        obstacles = new Integer[12];
+        obstacles = new Integer[11];
         frame = new JFrame();
         frame.setTitle("Case Noisettes");
         frame.setSize(600,600);
@@ -134,14 +134,16 @@ public class Background implements ActionListener{
         if (blackSquirrel != null) {
             obstacles[3]=blackSquirrel.getheadLocation();
             obstacles[4]=blackSquirrel.gettailLocation(blackSquirrel.getheadLocation(), blackSquirrel.getSquirrelRotation());
+            obstacles[5]=blackSquirrel.getLFlowerLocation(blackSquirrel.getheadLocation());
         }
         if (brownSquirrel != null) {
-            obstacles[5]=brownSquirrel.getheadLocation();
-            obstacles[6]=brownSquirrel.gettailLocation(brownSquirrel.getheadLocation(), brownSquirrel.getSquirrelRotation());
+            obstacles[6]=brownSquirrel.getheadLocation();
+            obstacles[7]=brownSquirrel.gettailLocation(brownSquirrel.getheadLocation(), brownSquirrel.getSquirrelRotation());
+            obstacles[8]=brownSquirrel.getLFlowerLocation(brownSquirrel.getheadLocation());
         }
         if (greySquirrel != null) {
-            obstacles[7]=greySquirrel.getheadLocation();
-            obstacles[8]=greySquirrel.gettailLocation(greySquirrel.getheadLocation(), greySquirrel.getSquirrelRotation());
+            obstacles[9]=greySquirrel.getheadLocation();
+            obstacles[10]=greySquirrel.gettailLocation(greySquirrel.getheadLocation(), greySquirrel.getSquirrelRotation());
         }
         return obstacles;
     }

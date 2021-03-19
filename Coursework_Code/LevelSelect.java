@@ -44,22 +44,39 @@ public class LevelSelect implements ActionListener {
     }
 
     private void buildLevel1() {
-            Background bg = new Background();
-            bg.createFlower(9);
-            Squirrel sq = new Squirrel(5,270,bg,"Red");
-            Squirrel gq = new Squirrel(10,0,bg,"Grey");
-            bg.addRedSquirrel(sq);
-            bg.addGreySquirrel(gq); 
-            frame.setVisible(false);
-            frame.dispose();
+        Background bg = new Background();
+        bg.createFlower(9);
+        Squirrel redsq = new Squirrel(5,270,bg,"Red");
+        Squirrel greysq = new Squirrel(10,0,bg,"Grey");
+        bg.addRedSquirrel(redsq);
+        bg.addGreySquirrel(greysq); 
+        frame.setVisible(false);
+        frame.dispose();
     }
 
     private void buildLevel2() {
-
+        Background bg = new Background();
+        bg.createFlower(15);
+        Squirrel blacksq = new Squirrel(11,180,bg,"Black");
+        Squirrel brownsq = new Squirrel(8,0,bg,"Brown");
+        bg.addBlackSquirrel(blacksq);
+        bg.addBrownSquirrel(brownsq);
+        frame.setVisible(false);
+        frame.dispose();
     }
 
     private void buildLevel3() {
-
+        Background bg = new Background();
+        Squirrel blacksq = new Squirrel(6,180,bg,"Black");
+        Squirrel brownsq = new Squirrel(14,180,bg,"Brown");
+        Squirrel redsq = new Squirrel(8,270,bg,"Red");
+        Squirrel greysq = new Squirrel(11,180,bg,"Grey");
+        bg.addBlackSquirrel(blacksq);
+        bg.addBrownSquirrel(brownsq);
+        bg.addRedSquirrel(redsq);
+        bg.addGreySquirrel(greysq); 
+        frame.setVisible(false);
+        frame.dispose();
     }
 
     public JFrame getFrame() {
